@@ -1,0 +1,55 @@
+import matplotlib.pyplot as plt
+
+import numpy as np
+
+from scipy.interpolate import interp1d
+
+from scipy import integrate
+
+def foo1():
+
+speed = np.array([25, 35, 45, 30, 60, 120, 100, 100, 70, 75, 80, 65])
+
+time = np.linspace(0, 11, 12)
+
+print(time)
+
+x = time
+
+y = speed
+
+plt.plot(x, y, marker="o")
+
+plt.axis([0, 11, 0, 130])
+
+plt.grid()
+
+plt.show()
+
+def foo(kind):
+
+interpolation = interp1d(x, y, kind=kind)
+
+xnew = np.linspace(start=0, stop=11, num=10000)
+
+ynew = interpolation(xnew)
+
+s = integrate.quad(lambda x: interpolation(x), 0, 11)
+
+print(f"{kind} = {s[0]}")
+
+plt.plot(xnew, ynew, 'y', x, y, 'ro')
+
+plt.title(kind)
+
+plt.axis([0, 11, 0, 130])
+
+plt.grid()
+
+plt.show()
+
+foo("cubic")
+
+foo("quadratic")
+
+foo1()
